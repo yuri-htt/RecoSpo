@@ -62,7 +62,7 @@ export default class App extends React.Component {
                 onPress={() => this.changeScene(item.route)}
               >
                 <Navigator
-                // 本来なら黄色が適用されるはず
+                  // TODO:本来なら黄色が適用されるはず
                   style={{backgroundColor: 'green'}}
                   configureScene={(route, routeStack) => Navigator.SceneConfigs.FloatFromBottomAndroid}
                   initialRoute={item.route}
