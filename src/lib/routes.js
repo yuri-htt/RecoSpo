@@ -1,4 +1,7 @@
 import Search from '../components/search';
+import MyLists from '../components/myLists';
+import AddEvent from '../components/addEvent';
+import Profile from '../components/profile';
 
 export default class Routes {
 
@@ -9,19 +12,26 @@ export default class Routes {
       };
     }
   
-    // myLists() {
-    //   return {
-    //     name: 'myLists',
-    //     component: MyLists,
-    //   };
-    // }
+    myLists() {
+      return {
+        name: 'myLists',
+        component: MyLists,
+      };
+    }
 
-    // profile() {
-		// 	return {
-		// 		name: 'profile',
-		// 		component: Profile,
-		// 	};
-    // }
+    addEvent() {
+      return {
+        name: 'addEvent',
+        component:  AddEvent,
+      };
+    }
+
+    profile() {
+			return {
+				name: 'profile',
+				component: Profile,
+			};
+    }
 
   }
   

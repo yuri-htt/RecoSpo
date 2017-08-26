@@ -3,12 +3,19 @@ import {
   StyleSheet, 
   Text, 
   View,
+  Image,
   StatusBar,
   TabBarIOS,
  } from 'react-native';
- import Icon from 'react-native-vector-icons/Ionicons';
- import config from './src/lib/config';
- import Routes from './src/lib/routes';
+
+import {
+  Navigator,
+} from 'react-native-deprecated-custom-components';
+import Navbar from './src/components/navbar';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Ionicon from 'react-native-vector-icons/Ionicons';
+import config from './src/lib/config';
+import Routes from './src/lib/routes';
 
 const MyStatusBar = () => (
   <View style={styles.statusBar}>
@@ -18,96 +25,80 @@ const MyStatusBar = () => (
 
 export default class App extends React.Component {
 
-  _renderContent = (color, pageText) => {
-    return (
-      <View style={[styles.tabContent, {backgroundColor: color}]}>
-        <Text>{pageText}</Text>
-      </View>
-    );
-  };
+  componentDidMount() {
+    //  
+  }
 
   render() {
     const routes = new Routes();
     const items = [{
       icon: 'search',
       route: routes.search(),
-    }, 
-    // {
-    //   icon: 'list',
-    //   route: routes.myLists(),
-    // }, {
-    //   icon: 'portrait',
-    //   route: routes.profile(),
-    // }
-    ];
+    }, {
+      icon: 'home',
+      route: routes.myLists(),
+    }, {
+      icon: 'calendar',
+      route: routes.addEvent(),
+    }, {
+      icon: 'settings',
+      route: routes.profile(),
+    }];
 
     return (
       <View style={{flex:1}}>
+ 
         <MyStatusBar
           barStyle="light-content"
         />
-        <TabBarIOS
-          unselectedTintColor="rgb(50, 143, 226)"
-          tintColor="rgb(50, 143, 226)"
-          barTintColor="white"
-        >
-        
-          <TabBarIOS.Item
-            icon={require('./src/img/iconDef.png')}
-            selectedIcon={require('./src/img/iconDef.png')}
-            renderAsOriginal
-            title="Search"
-            onPress={() => {
-              this.setState({
-                selectedTab: 'greenTab',
-                //presses: this.state.presses + 1
-              });
-            }}
-          >
-            {this._renderContent('#414A8C', 'Blue Tab')}
-          </TabBarIOS.Item>
-
-          <TabBarIOS.Item
-            icon={require('./src/img/iconDef.png')}
-            selectedIcon={require('./src/img/iconDef.png')}
-            renderAsOriginal
-            title="MyList"
-            onPress={() => {
-              this.setState({
-                selectedTab: 'greenTab',
-                //presses: this.state.presses + 1
-              });
-            }}
-          >
-            {/* {this._renderContent('#21551C', 'Green Tab', this.state.presses)} */}
-          </TabBarIOS.Item>
-
-          <TabBarIOS.Item
-            icon={require('./src/img/iconDef.png')}
-            selectedIcon={require('./src/img/iconDef.png')}
-            renderAsOriginal
-            title="Profile"
-            onPress={() => {
-              this.setState({
-                selectedTab: 'greenTab',
-                //presses: this.state.presses + 1
-              });
-            }}
-          >
-            {/* {this._renderContent('#21551C', 'Green Tab', this.state.presses)} */}
-          </TabBarIOS.Item>
+        <TabBarIOS>
+          {items.map((item, i) => {
+            return (
+              <TabBarIOS.Item
+                key={i}
+                title={item.route.name}
+                icon={require('./src/img/iconDef.png')}
+                style={{backgroundColor: 'blue'}}
+                onPress={() => this.changeScene(item.route)}
+              >
+                <Navigator
+                // 本来なら黄色が適用されるはず
+                  style={{backgroundColor: 'green'}}
+                  configureScene={(route, routeStack) => Navigator.SceneConfigs.FloatFromBottomAndroid}
+                  initialRoute={item.route}
+                  navigationBar={<Navbar {...this.props} drawer={this.refs.drawer} navigator={this.navigator}/>}
+                  renderScene={(route, navigator) => this.renderScene(route, navigator)}
+                  sceneStyle={{
+                    paddingTop: 56,
+                    paddingBottom: 49,
+                  }}
+                  ref={(navigator) => { this.navigator = navigator; }}
+                />
+                </TabBarIOS.Item>
+            );
+          })}
         </TabBarIOS>
       </View>
     );
   }
 
-  _renderContent() {
+  renderScene(route, navigator) {
     return (
-      <View style={[styles.tabContent, {backgroundColor: "blue"}]}>
-        <Text style={styles.tabText}>Search Page</Text>
+      <View style={{backgroundColor: 'green'}} />
+    )
+  }
+
+  _renderContent = (color, pageText) => {
+    return (
+      <View style={[styles.tabContent, {backgroundColor: 'yellow'}]}>
+        <Text>{1}</Text>
       </View>
     );
   };
+
+  actions() {
+
+  }
 }
 
 const styles = StyleSheet.create({
