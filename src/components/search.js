@@ -7,16 +7,28 @@ import {
     View,
     Text,
     StyleSheet,
+    Dimensions,
 } from 'react-native';
-  
+
+import config from '../lib/config';
 const entryImg = require('../img/entry.jpg');
+const magnifyingGlassImg = require('../img/magnifyingGlass.png');
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 
 export default class Search extends Component {
     render() {
         return (
             <View style={styles.scene}>
                 <View style={styles.centering}>
-                    <Text style={styles.txt}>Search</Text>
+                    <Image source={entryImg} style={styles.backGroundImg}/>
+                    <Image source={magnifyingGlassImg} style={styles.decorateImg}>
+                        <View style={styles.txtContainer}>
+                            <Text style={styles.mainTxt}>SEARCH SPORTS EVENT</Text>
+                            <Text style={styles.subTxt}>xxx xxxxx xx x xxxxxx xxxxxx</Text>
+                        </View>
+                        <View style={styles.searchBar} />
+                    </Image>
                 </View>
             </View>   
         );
@@ -33,8 +45,42 @@ var styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    txt: {
+    backGroundImg: {
+        position: 'absolute',
+        top:0,
+        left: 0,
+        width : screenWidth,
+        height: screenHeight,
+    },
+    decorateImg: {
+        position: 'absolute',
+        top:(screenHeight / 5),
+        left: -50,
+        width: 360,
+        height: 380,
+    },
+    txtContainer: {
+        marginHorizontal: 80,
+        paddingTop: 80,
+    },
+    mainTxt: {
         color: 'white',
-        fontSize: 20,
+        fontSize: 28,
+        fontWeight: 'bold',
+        fontFamily: 'Arial-BoldMT',
+        backgroundColor: config.transparent,
+        marginBottom: 10,
+    },
+    subTxt: {
+        color: 'white',
+        fontSize: 18,
+        backgroundColor: config.transparent,
+        marginBottom: 10,
+    },
+    searchBar: {
+        width: 300,
+        height: 44,
+        backgroundColor: 'rgba(255, 255, 255, 0.6)',
+        marginLeft: 80,
     },
 })
