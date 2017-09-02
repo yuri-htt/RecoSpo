@@ -1,3 +1,38 @@
+# Node
 node_modules/
 .expo/
 npm-debug.*
+
+# iOS
+ios/build/
+ios/DerivedData/
+ios/xcuserdata/
+
+# CocoaPods
+ios/Pods/
+
+# Android
+*.apk
+*.ap_
+*.dex
+*.class
+*.jks
+
+android/bin/
+android/gen/
+android/out/
+android/.gradle/
+android/build/
+android/proguard/
+android/.navigation/
+android/captures/
+
+# BUCK
+buck-out/
+\.buckd/
+android/app/libs
+android/keystores/debug.keystore
+
+# React-Native
+.DS_Store
+build/
