@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -11,25 +5,28 @@ import {
   Text,
   View
 } from 'react-native';
+const Realm = require('realm');
 
 export default class RecoSpo extends Component {
   render() {
+    let realm = new Realm({
+      schema: [{name: 'Dog', properties: {name: 'string'}}]
+    });
+ 
+    realm.write(() => {
+      realm.create('Dog', {name: 'Rex'});
+    });
+ 
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
+          Count of Dogs in Realm: {realm.objects('Dog').length}
         </Text>
       </View>
     );
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {
