@@ -15,8 +15,27 @@ const entryImg = require('../img/entry.jpg');
 const magnifyingGlassImg = require('../img/magnifyingGlass.png');
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
+const Realm = require('realm');
 
 export default class Search extends Component {
+
+    componentWillMount() {
+        //ユーザー情報がRealmに保存されているか確認
+        // let realm = new Realm({
+        //     schema: [{name: 'User', properties: {name: 'string'}}]
+        //   });
+
+        //未登録
+        //->登録画面をモーダルで表示
+        // realm.write(() => {
+        //     realm.create('Cat', {name: 'Valon'});
+        //   });
+
+        //登録済み
+        //->関連するデータを取得
+
+
+    }
 
     render() {
         return (
@@ -33,7 +52,7 @@ export default class Search extends Component {
                 </View>
             </View>   
         );
-    }
+      }   
 }
 
 var styles = StyleSheet.create({
