@@ -31,13 +31,15 @@ const screenHeight = Dimensions.get('window').height;
 
 export class App extends Component {
   state = {
-    modalVisible: false,
-    userName: 'Your name',
+		modalVisible: false,
+		userName: 'Your name',
+		alertModalVisible: false,
+		errorMessage: '',
   }
 
   componentWillMount() {
     Realm.open({
-      schema: [NoUser]//[User]
+      schema: [NoUser]
     }).then(realm => {
       console.log(realm)
       // 名前を取得
@@ -50,11 +52,10 @@ export class App extends Component {
 
   render() {
     return (
-
-    <View style={styles.scene}>
-      {this.renderRegisterModal()}
-      <Tabs />
-    </View>
+		<View style={styles.scene}>
+			{this.renderRegisterModal()}
+			<Tabs />
+		</View>
     )
   }
 
@@ -85,10 +86,11 @@ export class App extends Component {
                 <Text style={styles.signUpTxt}>Sign Up</Text>
               </TouchableOpacity>
 
-			  <TouchableOpacity style={styles.try} onPress={() => this.props.actions.signUpSuccess(this.state.userName)}>
+			 			 <TouchableOpacity style={styles.try} onPress={() => this.props.actions.signUpSuccess(this.state.userName)}>
                 <Text style={styles.signUpTxt}>ACTION CHECK</Text>
               </TouchableOpacity>
 
+							{this.rederAlert()}
             </View>
 
           </KeyboardAwareScrollView>
@@ -119,27 +121,33 @@ export class App extends Component {
     .then((response) => {
       if (response.ok || response.status === 200) {
         return this.signUpSuccess()
-      }
+			}
+			this.setState({ alertModalVisible: true })
+			this.setState({ errorMessage: 'ニックネームを入力してください。'})
       throw errors(response.status);
     })
-    .catch(error => 
-      console.log(error)
-    )
+    .catch((error) => {
+			this.setState({ errorMessage: '通信状況をご確認の上、再度お試しください。'})
+		})
     .done();
-   };
-
-   alert(txt) {
-    console.log(txt)
-  }
+   }
 
   signUpSuccess() {
-	const {
-		actions,
-	} = this.props;
-	this.setState({ modalVisible: false });
-	actions.signUpSuccess();
-    console.log(this)
-  }
+		this.setState({ modalVisible: false });
+		this.props.actions.signUpSuccess(this.state.userName);
+	}
+	
+	rederAlert() {
+		return (
+			<Modal
+				style={styles.alertModal}
+				isOpen={this.state.alertModalVisible}
+				onClosed={() => this.setState({alertModalVisible: false})}
+			>
+				<Text style={styles.alertModalTxt}>{this.state.errorMessage}</Text>
+			</Modal>
+		)
+	}
 }
 
 var styles = StyleSheet.create({
@@ -203,7 +211,21 @@ var styles = StyleSheet.create({
 	backgroundColor: config.transparent,
 	borderWidth: 1,
 	borderColor: 'white',
-  },
+	},
+	alertModal: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		width: 250,
+		height: 150,
+		backgroundColor: 'white',
+		borderRadius: 20,
+		padding: 20,
+	},
+	alertModalTxt: {
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    backgroundColor: config.transparent,
+	},
 })
 
 class User {}
