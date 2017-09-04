@@ -1,3 +1,4 @@
+'use strict';
 
 import React, { Component } from 'react';
 import {
@@ -9,22 +10,20 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import {
-  Divider,
-} from 'react-native-material-design';
-import Modal from 'react-native-modalbox';
-import {
-  KeyboardAwareScrollView,
-} from 'react-native-keyboard-aware-scroll-view';
+import { Divider } from 'react-native-material-design';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Modal from 'react-native-modalbox';
 
 import { Tabs } from './router';
 import config from '../lib/config';
+import pathConfig from '../lib/pathConfig';
 
 import * as AuthActions from '../redux/modules/auth';
 
 const signUpImg = require('../img/signUp.jpg');
+const UserModel = require('../models/user');
 const Realm = require('realm');
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -39,13 +38,12 @@ export class App extends Component {
 
   componentWillMount() {
     Realm.open({
-      schema: [NoUser]
+      schema: [UserModel.User]
     }).then(realm => {
       console.log(realm)
-      // 名前を取得
+      // TODO:ユーザー名を取得してReduxに保存
       this.setState({modalVisible: false});
     }).catch(error => {
-      console.log('データがないよ！');
       this.setState({modalVisible: true})
     });
   }
@@ -100,8 +98,7 @@ export class App extends Component {
   }
 
   signUp(userName) {
-
-    let path =  'http://192.168.35.101:3000/api/v1/users';
+		let path = `${pathConfig.userSignUp}`;
     let userData = {
       user: {
         nickname: userName
@@ -120,6 +117,7 @@ export class App extends Component {
     })
     .then((response) => {
       if (response.ok || response.status === 200) {
+				console.log(response);
         return this.signUpSuccess()
 			}
 			this.setState({ alertModalVisible: true })
@@ -157,7 +155,7 @@ var styles = StyleSheet.create({
   centering: {
       justifyContent: 'center',
       alignItems: 'center',
-      flex:1,
+      flex: 1,
       backgroundColor: 'blue',
   },
   backGroundImg: {
@@ -227,22 +225,6 @@ var styles = StyleSheet.create({
     backgroundColor: config.transparent,
 	},
 })
-
-class User {}
-User.schema = {
-    name: 'User',
-    properties: {
-        name: { type: 'string'},
-    }
-};
-
-class NoUser {}
-User.schema = {
-    name: 'NoUser',
-    properties: {
-        name: { type: 'string'},
-    }
-};
 
 export default connect(
 	state => ({ ...state }),
