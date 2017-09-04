@@ -33,22 +33,22 @@ export default function reducer(state = initialState, action = {}) {
       }
  }
 
- function requestUser() {
-    return {
-      type: LOAD
-    };
-  }
-  
-  function receiveUser(json) {
-    return {
-      type: LOAD_SUCCESS,
-      data: json
-    };
-  }
-  
-  function receiveUserFail(error) {
-    return {
-      type: LOAD_FAIL,
-      error: error
-    };
-  }
+function requestUser() {
+  return {
+    type: LOAD
+  };
+}
+
+function receiveUser(json) {
+  return {
+    type: LOAD_SUCCESS,
+    data: json
+  };
+}
+
+function receiveUserFail(error) {
+  return {
+    type: LOAD_FAIL,
+    error: error
+  };
+}

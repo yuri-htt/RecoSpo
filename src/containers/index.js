@@ -28,7 +28,7 @@ const screenHeight = Dimensions.get('window').height;
 export default class App extends Component {
   state = {
     modalVisible: false,
-    text: 'Your name',
+    userName: 'Your name',
   }
 
   componentWillMount() {
@@ -71,13 +71,13 @@ export default class App extends Component {
               <View style={styles.textInputContainer}>
                 <TextInput
                   style={styles.textInput}
-                  onChangeText={(text) => this.setState({text})}
-                  value={this.state.text}
+                  onChangeText={(userName) => this.setState({userName})}
+                  value={this.state.userName}
                 />
                 <Divider style={styles.border}/>
               </View>
 
-              <TouchableOpacity style={styles.signUpBtn}>
+              <TouchableOpacity style={styles.signUpBtn} onPress={() => this.signUp(this.state.userName)}>
                 <Text style={styles.signUpTxt}>Sign Up</Text>
               </TouchableOpacity>
 
@@ -88,7 +88,44 @@ export default class App extends Component {
       </Modal>
     )
   }
+
+  signUp(userName) {
+
+    let path =  'http://192.168.35.101:3000/api/v1/users';
+    let userData = {
+      user: {
+        nickname: userName
+      }
+    }
+
+   return fetch(`${path}`, 
+    {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    })
+    .then((response) => {
+      if (response.ok || response.status === 200) {
+        return this.alert(response);
+      }
+      throw errors(response.status);
+    })
+    .catch(error => 
+      console.log(error)
+    )
+    .done();
+   };
+
+   alert(txt) {
+    console.log(txt)
+  }
 }
+
+  
 
 var styles = StyleSheet.create({
   scene: {
