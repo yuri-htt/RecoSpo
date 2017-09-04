@@ -16,16 +16,20 @@ import Modal from 'react-native-modalbox';
 import {
   KeyboardAwareScrollView,
 } from 'react-native-keyboard-aware-scroll-view';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 import { Tabs } from './router';
 import config from '../lib/config';
+
+import * as AuthActions from '../redux/modules/auth';
 
 const signUpImg = require('../img/signUp.jpg');
 const Realm = require('realm');
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
-export default class App extends Component {
+export class App extends Component {
   state = {
     modalVisible: false,
     userName: 'Your name',
@@ -81,6 +85,10 @@ export default class App extends Component {
                 <Text style={styles.signUpTxt}>Sign Up</Text>
               </TouchableOpacity>
 
+			  <TouchableOpacity style={styles.try} onPress={() => this.props.actions.signUpSuccess(this.state.userName)}>
+                <Text style={styles.signUpTxt}>ACTION CHECK</Text>
+              </TouchableOpacity>
+
             </View>
 
           </KeyboardAwareScrollView>
@@ -110,7 +118,7 @@ export default class App extends Component {
     })
     .then((response) => {
       if (response.ok || response.status === 200) {
-        return this.alert(response);
+        return this.signUpSuccess()
       }
       throw errors(response.status);
     })
@@ -123,9 +131,16 @@ export default class App extends Component {
    alert(txt) {
     console.log(txt)
   }
-}
 
-  
+  signUpSuccess() {
+	const {
+		actions,
+	} = this.props;
+	this.setState({ modalVisible: false });
+	actions.signUpSuccess();
+    console.log(this)
+  }
+}
 
 var styles = StyleSheet.create({
   scene: {
@@ -179,6 +194,16 @@ var styles = StyleSheet.create({
     lineHeight: 40,
     backgroundColor: config.transparent,
   },
+  try: {
+	position: 'absolute',
+    bottom: 50,
+    width: 200,
+    height: 40,
+    borderRadius:20,
+	backgroundColor: config.transparent,
+	borderWidth: 1,
+	borderColor: 'white',
+  },
 })
 
 class User {}
@@ -196,3 +221,12 @@ User.schema = {
         name: { type: 'string'},
     }
 };
+
+export default connect(
+	state => ({ ...state }),
+	dispatch => ({
+	  actions: bindActionCreators({
+		...AuthActions,
+	  }, dispatch),
+	}),
+)(App);
