@@ -36,3 +36,10 @@ android/keystores/debug.keystore
 # React-Native
 .DS_Store
 build/
+src/lib/pathConfig
+src/lib/pathConfig.js
+src/lib
+./src/lib/pathConfig
+./src/lib/pathConfig.js
+./src/lib
+src/
