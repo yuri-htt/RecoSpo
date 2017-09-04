@@ -3,6 +3,7 @@
 const LOAD = 'teamhub/auth/LOAD';
 const LOAD_SUCCESS = 'teamhub/auth/LOAD_SUCCESS';
 const LOAD_FAIL = 'teamhub/auth/LOAD_FAIL';
+const SIGN_UP_SUCCESS = 'teamhub/auth/SIGN_UP_SUCCESS';
 
 const initialState = {
     loading: false,
@@ -28,27 +29,39 @@ export default function reducer(state = initialState, action = {}) {
           loading: false,
           loaded: false,
         };
+    case SIGN_UP_SUCCESS:
+      return {
+        ...state,
+        username: action.userName,
+      }; 
     default:
         return state;
       }
  }
 
- function requestUser() {
-    return {
-      type: LOAD
-    };
-  }
-  
-  function receiveUser(json) {
-    return {
-      type: LOAD_SUCCESS,
-      data: json
-    };
-  }
-  
-  function receiveUserFail(error) {
-    return {
-      type: LOAD_FAIL,
-      error: error
-    };
-  }
+function requestUser() {
+  return {
+    type: LOAD
+  };
+}
+
+function receiveUser(json) {
+  return {
+    type: LOAD_SUCCESS,
+    data: json
+  };
+}
+
+function receiveUserFail(error) {
+  return {
+    type: LOAD_FAIL,
+    error: error
+  };
+}
+
+export function signUpSuccess(userName) {
+  return {
+    type : SIGN_UP_SUCCESS,
+    userName: userName,
+  };
+}

@@ -1,7 +1,6 @@
 'use strict';
 
 import React, { Component } from 'react';
-
 import {
     Image,
     View,
@@ -9,33 +8,18 @@ import {
     StyleSheet,
     Dimensions,
 } from 'react-native';
-
+import Modal from 'react-native-modalbox';
 import config from '../lib/config';
+
 const entryImg = require('../img/entry.jpg');
+const signUpImg = require('../img/signUp.jpg');
 const magnifyingGlassImg = require('../img/magnifyingGlass.png');
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
+
 const Realm = require('realm');
 
 export default class Search extends Component {
-
-    componentWillMount() {
-        //ユーザー情報がRealmに保存されているか確認
-        // let realm = new Realm({
-        //     schema: [{name: 'User', properties: {name: 'string'}}]
-        //   });
-
-        //未登録
-        //->登録画面をモーダルで表示
-        // realm.write(() => {
-        //     realm.create('Cat', {name: 'Valon'});
-        //   });
-
-        //登録済み
-        //->関連するデータを取得
-
-
-    }
 
     render() {
         return (
@@ -50,9 +34,10 @@ export default class Search extends Component {
                         <View style={styles.searchBar} />
                     </Image>
                 </View>
+                
             </View>   
         );
-      }   
+    }
 }
 
 var styles = StyleSheet.create({
