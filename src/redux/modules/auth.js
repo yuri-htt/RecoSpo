@@ -87,36 +87,38 @@ export function setUser(userName) {
 }
 
 export function signUp(userName) {
-  const path = `${pathConfig.userSignUp}`;
-  const userData = {
-    user: {
-      nickname: userName,
-    },
-  };
-
-  return fetch(`${path}`,
-    {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+  return (dispatch, getState) => {
+    const path = `${pathConfig.userSignUp}`;
+    const userData = {
+      user: {
+        nickname: userName,
       },
-      body: JSON.stringify(userData),
-    })
-    .then((response) => {
-      if (response.ok || response.status === 200) {
-        dispatch(signUpSuccess());
-      } else {
-        dispatch(signUpFail());
-        dispatch(outPutError('ニックネームを入力してください。'));
-        throw errors(response.status);
-      }
-    })
-    .catch((error) => {
-      dispatch(outPutError('通信状況をご確認の上、再度お試しください。'));
-    })
-    .done();
+    };
+
+    return fetch(`${path}`,
+      {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      })
+      .then((response) => {
+        if (response.ok || response.status === 200) {
+          dispatch(signUpSuccess());
+        } else {
+          dispatch(signUpFail());
+          dispatch(outPutError('ニックネームを入力してください。'));
+          throw errors(response.status);
+        }
+      })
+      .catch((error) => {
+        dispatch(outPutError('通信状況をご確認の上、再度お試しください。'));
+      })
+      .done();
+  };
 }
 
 export function signUpSuccess(userName) {

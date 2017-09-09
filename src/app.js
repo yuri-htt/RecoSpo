@@ -34,7 +34,7 @@ export class App extends Component {
   }
 
   componentWillMount() {
-    this.queryUserData()
+		this.queryUserData()
   }
 
   render() {
@@ -99,38 +99,20 @@ export class App extends Component {
       schema: [UserModel.User]
     })
 
-  Realm.open({
-    schema: [UserModel.User]
-  }).then(realm => {
-      // TODO:ユーザー名を取得してReduxに保存
-      const userName = realm.objects(UserModel.User)[0].name;
-      console.log(userName)
-      this.props.actions.setUser(userName);
-    this.setState({modalVisible: false});
-  }).catch(error => {
-    this.setState({modalVisible: true})
-    });
+		Realm.open({
+			schema: [UserModel.User]
+		}).then(realm => {
+			const userName = realm.objects(UserModel.User)[0].name;
+			this.props.actions.setUser(userName);
+			this.setState({modalVisible: false});
+		}).catch(error => {
+			this.setState({modalVisible: true})
+			});
   }
 
   signUp(userName) {
     this.props.actions.signUp(userName);
    }
-
-  signUpSuccess() {
-    // TODO
-    Realm.open({
-    schema: [UserModel.User]
-  }).then(realm => {
-      realm.write(() => {
-        const me = realm.create('User', {
-          name: 'Yuri03',
-        });
-      });
-    });
-    this.setState({ modalVisible: false });
-    this.props.actions.signUpSuccess(this.state.userName);
-  }
-
 }
 
 var styles = StyleSheet.create({
