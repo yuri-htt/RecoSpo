@@ -28,18 +28,13 @@ jobs:
 
       - run:
           name: Install dependencies
-          command: yarn
-      - run:
-          name: Build
-          command: yarn run build
+          command: yarn install
       - run:
           name: Test
           command: yarn test
       - run:
           name: lint
-          command: |
-            mkdir -p /reports
-            ./node_modules/.bin/eslint --config .eslintrc.yml src --format=junit --output-file ./reports/eslint.xml
+          command: ./node_modules/.bin/eslint --config .eslintrc src
 
       - save_cache:
           paths:
