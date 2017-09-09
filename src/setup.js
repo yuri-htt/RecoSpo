@@ -1,9 +1,9 @@
 'use strict';
 
 import React, { Component } from 'react';
-import App from './index';
+import App from './app';
 import { Provider } from 'react-redux';
-import configureStore from '../redux/configureStore';
+import configureStore from './redux/configureStore';
 
 // Import the store created in configureStore.js
 const store = configureStore();
