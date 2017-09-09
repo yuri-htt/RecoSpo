@@ -16,13 +16,14 @@ export default class CommonModal extends Component {
     const {
       auth,
       actions,
+      onClosed,
     } = this.props;
 
     return (
       <Modal
         style={styles.alertModal}
-        isOpen={this.state.alertModalVisible}
-        onClosed={() => this.setState({ alertModalVisible: false })}
+        isOpen={true}
+        onClosed={() => actions.change(`${onClosed}`, false )}
       >
         <Text style={styles.alertModalTxt}>{this.state.errorMessage}</Text>
       </Modal>

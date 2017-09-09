@@ -6,16 +6,17 @@ const UserModel = require('../../models/user');
 const LOAD = 'teamhub/auth/LOAD';
 const LOAD_SUCCESS = 'teamhub/auth/LOAD_SUCCESS';
 const LOAD_FAIL = 'teamhub/auth/LOAD_FAIL';
-const SIGN_UP_SUCCESS = 'teamhub/auth/SIGN_UP_SUCCESS';
+const SIGNUP_SUCCESS = 'teamhub/auth/SIGN_UP_SUCCESS';
 const SET_USER = 'teamhub/auth/SET_USER';
-const SIGN_UP_FAIL = 'teamhub/auth/SIGN_UP_FAIL';
-const OUTPUT_ERROR = 'teamhub/auth/OUTPUT_ERROR';
+const SIGNUP_FAIL = 'teamhub/auth/SIGN_UP_FAIL';
+const SET_ERROR_MESSAGE = 'teamhub/auth/SET_ERROR_MESSAGE';
 const NEED_SIGNUP = 'teamhub/auth/NEED_SIGNUP';
 
 const initialState = {
   loading: false,
   loaded: false,
   signupModalVisible: false,
+  alertModalVisible: false,
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -37,31 +38,31 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         loaded: false,
       };
-    case SIGN_UP_SUCCESS:
+    case SIGNUP_SUCCESS:
       return {
         ...state,
         userName: action.userName,
       };
-    case SIGN_UP_FAIL:
+    case SIGNUP_FAIL:
       return {
         ...state,
         alertModalVisible: true,
       };
-    case OUTPUT_ERROR:
+    case SET_ERROR_MESSAGE:
       return {
         ...state,
-        signupErrorMessage: action.errorMessage,
+        modalContent: action.errorMessage,
       };
     case SET_USER:
       return {
         ...state,
         userName: action.userName,
       };
-    case NEED_SIGNUP: 
+    case NEED_SIGNUP:
       return {
         ...state,
         signupModalVisible: action.need,
-      }
+      };
     default:
       return state;
   }
@@ -89,22 +90,22 @@ function receiveUserFail(error) {
 
 export function hasUserData() {
   return (dispatch, getState) => {
-    let realm = new Realm({
-      schema: [UserModel.User]
-    })
-  
+    const realm = new Realm({
+      schema: [UserModel.User],
+    });
+
     return (
       Realm.open({
-        schema: [UserModel.User]
-      }).then(realm => {
+        schema: [UserModel.User],
+      }).then((realm) => {
         const userName = realm.objects(UserModel.User)[0].name;
         dispatch(setUser(userName));
         dispatch(needSignup(false));
-      }).catch(error => {
+      }).catch((error) => {
         dispatch(needSignup(true));
       })
     );
-  }
+  };
 }
 
 function needSignup(bool) {
@@ -142,36 +143,37 @@ export function signup(userName) {
       })
       .then((response) => {
         if (response.ok || response.status === 200) {
-          dispatch(signupSuccess());
+          dispatch(signupSuccess(userName));
         } else {
           dispatch(signupFail());
-          dispatch(outPutError('ニックネームを入力してください。'));
+          dispatch(setErrorMessage('ニックネームを入力してください。'));
           throw errors(response.status);
         }
       })
       .catch((error) => {
-        dispatch(outPutError('通信状況をご確認の上、再度お試しください。'));
+        dispatch(setErrorMessage('通信状況をご確認の上、再度お試しください。'));
       })
       .done();
   };
 }
 
 export function signupSuccess(userName) {
+  // Realmに保存
   return {
-    type: SIGN_UP_SUCCESS,
+    type: SIGNUP_SUCCESS,
     userName,
   };
 }
 
 function signupFail() {
   return {
-    type: SIGN_UP_FAIL,
+    type: SIGNUP_FAIL,
   };
 }
 
-function outPutError(errorMessage) {
+function setErrorMessage(errorMessage) {
   return {
-    type: OUTPUT_ERROR,
+    type: SET_ERROR_MESSAGE,
     errorMessage,
   };
 }

@@ -36,7 +36,7 @@ export default class SignupModal extends Component {
     return (
       <Modal
         style={styles.modal}
-        isOpen={auth === undefined ? false : auth.signupModalVisible}
+        isOpen={auth === undefined ? true : auth.signupModalVisible}
         onClosed={() => actions.change('auth.signupModalVisible', false)}
       >
         <Image source={signupImg} style={styles.backGroundImg}>
@@ -44,32 +44,28 @@ export default class SignupModal extends Component {
             style={styles.scene}
             keyboardShouldPersistTaps="handled"
           >
-            <View style={styles.whileScreen}>
+						<View style={styles.whileScreen}>
 
-              <View style={styles.textInputContainer}>
-                <TextInput
-                  style={styles.textInput}
-                  onChangeText={userName => this.setState({ userName })}
-                  value={this.state.userName}
-                />
-                <Divider style={styles.border} />
-              </View>
+							<View style={styles.textInputContainer}>
+								<TextInput
+									style={styles.textInput}
+									onChangeText={userName => this.setState({ userName })}
+									value={this.state.userName}
+									onFocus={() => this.setState({ userName : '' })}
+								/>
+								<Divider style={styles.border} />
+							</View>
 
-              <TouchableOpacity style={styles.signupBtn} onPress={() => this.signup(this.state.userName)}>
-                <Text style={styles.signupTxt}>Sign Up</Text>
-              </TouchableOpacity>
+							<TouchableOpacity style={styles.signupBtn} onPress={() => actions.signup(this.state.userName)}>
+								<Text style={styles.signupTxt}>Sign Up</Text>
+							</TouchableOpacity>
 
-              {/* {this.rederAlert()} */}
-            </View>
+						</View>
 
           </KeyboardAwareScrollView>
         </Image>
       </Modal>
     );
-	}
-	
-	signup(userName) {
-  	this.props.actions.signup(userName);
 	}
 }
 
