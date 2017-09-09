@@ -21,7 +21,7 @@ export default function reducer(state = initialState, action = {}) {
     case LOAD:
         return {
           ...state,
-          loading: true, 
+          loading: true,
         };
     case LOAD_SUCCESS:
         return {
@@ -54,7 +54,7 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         userName: action.userName,
-      }
+      };
     default:
         return state;
       }
@@ -95,7 +95,7 @@ export function signUp(userName) {
     }
   }
 
- return fetch(`${path}`, 
+ return fetch(`${path}`,
   {
     method: 'POST',
     credentials: 'include',
@@ -126,6 +126,7 @@ export function signUpSuccess(userName) {
     userName: userName,
   };
 }
+<<<<<<< HEAD
 
 function signUpFail() {
   return {
@@ -139,3 +140,5 @@ function outPutError(errorMessage) {
     errorMessage: errorMessage,
   }
 }
+=======
+>>>>>>> master

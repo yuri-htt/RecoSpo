@@ -36,4 +36,5 @@ android/keystores/debug.keystore
 # React-Native
 .DS_Store
 build/
-src/lib/pathConfig
+lib/pathConfig.js
+realm-object-server/*
