@@ -1,6 +1,5 @@
-'use strict';
+import pathConfig from '../../../lib/pathConfig';
 
-import pathConfig from '../../lib/pathConfig';
 const Realm = require('realm');
 
 const LOAD = 'teamhub/auth/LOAD';
@@ -12,29 +11,29 @@ const SIGN_UP_FAIL = 'teamhub/auth/SIGN_UP_FAIL';
 const OUTPUT_ERROR = 'teamhub/auth/OUTPUT_ERROR';
 
 const initialState = {
-    loading: false,
-    loaded: false,
-  };
+  loading: false,
+  loaded: false,
+};
 
 export default function reducer(state = initialState, action = {}) {
-    switch (action.type) {
+  switch (action.type) {
     case LOAD:
-        return {
-          ...state,
-          loading: true,
-        };
+      return {
+        ...state,
+        loading: true,
+      };
     case LOAD_SUCCESS:
-        return {
-          ...state,
-          loading: false,
-          loaded: true,
-        };
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+      };
     case LOAD_FAIL:
-        return {
-          ...state,
-          loading: false,
-          loaded: false,
-        };
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+      };
     case SIGN_UP_SUCCESS:
       return {
         ...state,
@@ -44,101 +43,98 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         alertModalVisible: true,
-      }
+      };
     case OUTPUT_ERROR:
-    return {
-      ...state,
-      signUpErrorMessage: action.errorMessage,
-    }
+      return {
+        ...state,
+        signUpErrorMessage: action.errorMessage,
+      };
     case SET_USER:
       return {
         ...state,
         userName: action.userName,
       };
     default:
-        return state;
-      }
- }
+      return state;
+  }
+}
 
 function requestUser() {
   return {
-    type: LOAD
+    type: LOAD,
   };
 }
 
 function receiveUser(json) {
   return {
     type: LOAD_SUCCESS,
-    data: json
+    data: json,
   };
 }
 
 function receiveUserFail(error) {
   return {
     type: LOAD_FAIL,
-    error: error
+    error,
   };
 }
 
 export function setUser(userName) {
   return {
     type: SET_USER,
-    userName: userName
-  }
+    userName,
+  };
 }
 
 export function signUp(userName) {
-  let path = `${pathConfig.userSignUp}`;
-  let userData = {
+  const path = `${pathConfig.userSignUp}`;
+  const userData = {
     user: {
-      nickname: userName
-    }
-  }
-
- return fetch(`${path}`,
-  {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
+      nickname: userName,
     },
-    body: JSON.stringify(userData),
-  })
-  .then((response) => {
-    if (response.ok || response.status === 200) {
-      dispatch(signUpSuccess());
-    } else {
-      dispatch(signUpFail());
-      dispatch(outPutError('ニックネームを入力してください。'));
-      throw errors(response.status);
-    }
-  })
-  .catch((error) => {
-    dispatch(outPutError('通信状況をご確認の上、再度お試しください。'));
-  })
-  .done();
+  };
+
+  return fetch(`${path}`,
+    {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    })
+    .then((response) => {
+      if (response.ok || response.status === 200) {
+        dispatch(signUpSuccess());
+      } else {
+        dispatch(signUpFail());
+        dispatch(outPutError('ニックネームを入力してください。'));
+        throw errors(response.status);
+      }
+    })
+    .catch((error) => {
+      dispatch(outPutError('通信状況をご確認の上、再度お試しください。'));
+    })
+    .done();
 }
 
 export function signUpSuccess(userName) {
   return {
-    type : SIGN_UP_SUCCESS,
-    userName: userName,
+    type: SIGN_UP_SUCCESS,
+    userName,
   };
 }
-<<<<<<< HEAD
 
 function signUpFail() {
   return {
     type: SIGN_UP_FAIL,
-  }
+  };
 }
 
 function outPutError(errorMessage) {
   return {
     type: OUTPUT_ERROR,
-    errorMessage: errorMessage,
-  }
+    errorMessage,
+  };
 }
-=======
->>>>>>> master
