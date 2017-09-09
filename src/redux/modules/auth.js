@@ -15,7 +15,7 @@ export default function reducer(state = initialState, action = {}) {
     case LOAD:
         return {
           ...state,
-          loading: true, 
+          loading: true,
         };
     case LOAD_SUCCESS:
         return {
@@ -33,7 +33,7 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         username: action.userName,
-      }; 
+      };
     default:
         return state;
       }
