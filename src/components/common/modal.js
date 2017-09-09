@@ -8,9 +8,9 @@ import Modal from 'react-native-modalbox';
 import config from '../../../lib/config';
 
 export default class CommonModal extends Component {
-	state = {
+  state = {
     alertModalVisible: false,
-	}
+  }
 
   render() {
     const {
