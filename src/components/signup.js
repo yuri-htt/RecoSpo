@@ -20,13 +20,13 @@ const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
 export default class SignupModal extends Component {
-	state = {
+  state = {
     modalVisible: false,
     userName: 'Your name',
     alertModalVisible: false,
     errorMessage: '',
-	}
-	
+  }
+  
   render() {
     const {
       auth,
@@ -44,29 +44,29 @@ export default class SignupModal extends Component {
             style={styles.scene}
             keyboardShouldPersistTaps="handled"
           >
-						<View style={styles.whileScreen}>
+            <View style={styles.whileScreen}>
 
-							<View style={styles.textInputContainer}>
-								<TextInput
-									style={styles.textInput}
-									onChangeText={userName => this.setState({ userName })}
-									value={this.state.userName}
-									onFocus={() => this.setState({ userName : '' })}
-								/>
-								<Divider style={styles.border} />
-							</View>
+              <View style={styles.textInputContainer}>
+                <TextInput
+                  style={styles.textInput}
+                  onChangeText={userName => this.setState({ userName })}
+                  value={this.state.userName}
+                  onFocus={() => this.setState({ userName : '' })}
+                />
+                <Divider style={styles.border} />
+              </View>
 
-							<TouchableOpacity style={styles.signupBtn} onPress={() => actions.signup(this.state.userName)}>
-								<Text style={styles.signupTxt}>Sign Up</Text>
-							</TouchableOpacity>
+              <TouchableOpacity style={styles.signupBtn} onPress={() => actions.signup(this.state.userName)}>
+                <Text style={styles.signupTxt}>Sign Up</Text>
+              </TouchableOpacity>
 
-						</View>
+            </View>
 
           </KeyboardAwareScrollView>
         </Image>
       </Modal>
     );
-	}
+  }
 }
 
 

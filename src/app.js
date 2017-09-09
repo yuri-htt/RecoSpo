@@ -23,24 +23,24 @@ import * as ModalActions from './redux/modules/modal';
 
 export class App extends Component {
   componentWillMount() {
-		this.props.actions.hasUserData();
+    this.props.actions.hasUserData();
   }
 
   render() {
-		const {
-			auth,
-		} = this.props;
-		console.log(this)
+    const {
+      auth,
+    } = this.props;
+    console.log(this)
     return (
       <View style={styles.scene}>
-				<SignupModal {...this.props} />
-				{auth.alertModalVisible &&
-					<CommonModal 
-						onClosed={'auth.alertModalVisible'}
-						{...this.props} 
-					/>
-				}
-				<Tabs />
+        <SignupModal {...this.props} />
+        {auth.alertModalVisible &&
+          <CommonModal 
+            onClosed={'auth.alertModalVisible'}
+            {...this.props} 
+          />
+        }
+        <Tabs />
       </View>
     )
   }
@@ -56,9 +56,9 @@ export default connect(
   state => ({ ...state }),
   dispatch => ({
     actions: bindActionCreators({
-		...FormActions,
-		...AuthActions,
-		...ModalActions,
+    ...FormActions,
+    ...AuthActions,
+    ...ModalActions,
     }, dispatch),
   }),
 )(App);
