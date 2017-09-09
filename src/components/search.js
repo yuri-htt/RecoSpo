@@ -9,7 +9,7 @@ import {
     Dimensions,
 } from 'react-native';
 import Modal from 'react-native-modalbox';
-import config from '../lib/config';
+import config from '../../lib/config';
 
 const entryImg = require('../img/entry.jpg');
 const signUpImg = require('../img/signUp.jpg');
@@ -34,8 +34,8 @@ export default class Search extends Component {
                         <View style={styles.searchBar} />
                     </Image>
                 </View>
-                
-            </View>   
+
+            </View>
         );
     }
 }

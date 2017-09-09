@@ -17,8 +17,8 @@ import { connect } from 'react-redux';
 import Modal from 'react-native-modalbox';
 
 import { Tabs } from './router';
-import config from '../lib/config';
-import pathConfig from '../lib/pathConfig';
+import config from '../../lib/config';
+import pathConfig from '../../lib/pathConfig';
 
 import * as AuthActions from '../redux/modules/auth';
 
@@ -105,7 +105,7 @@ export class App extends Component {
       }
     }
 
-   return fetch(`${path}`, 
+   return fetch(`${path}`,
     {
       method: 'POST',
       credentials: 'include',
@@ -134,7 +134,7 @@ export class App extends Component {
 		this.setState({ modalVisible: false });
 		this.props.actions.signUpSuccess(this.state.userName);
 	}
-	
+
 	rederAlert() {
 		return (
 			<Modal
