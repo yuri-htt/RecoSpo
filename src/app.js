@@ -16,7 +16,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Modal from 'react-native-modalbox';
 
-import { Tabs } from './containers/router';
+import { Tabs } from './tabs/router';
 import config from './lib/config';
 
 import * as AuthActions from './redux/modules/auth';
