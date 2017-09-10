@@ -30,7 +30,7 @@ export class App extends Component {
     const {
       auth,
     } = this.props;
-    console.log(this)
+
     return (
       <View style={styles.scene}>
         <SignupModal {...this.props} />

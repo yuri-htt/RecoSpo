@@ -25,7 +25,7 @@ export default class CommonModal extends Component {
         isOpen={true}
         onClosed={() => actions.change(`${onClosed}`, false )}
       >
-        <Text style={styles.alertModalTxt}>{this.state.errorMessage}</Text>
+        <Text style={styles.alertModalTxt}>{auth.modalContent}</Text>
       </Modal>
     );
   }

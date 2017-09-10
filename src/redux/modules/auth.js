@@ -1,7 +1,7 @@
 import pathConfig from '../../../lib/pathConfig';
+import { UserSchema } from '../../models/user';
 
 const Realm = require('realm');
-const UserModel = require('../../models/user');
 
 const LOAD = 'teamhub/auth/LOAD';
 const LOAD_SUCCESS = 'teamhub/auth/LOAD_SUCCESS';
@@ -69,18 +69,25 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 export function hasUserData() {
+  // RealmのDBファイルを確認するために必要
+  // const realm = new Realm({ schema: UserSchema });
+  // console.log(realm.path)
+
   return (dispatch) => {
-    return (
-      Realm.open({
-        schema: [UserModel.User],
-      }).then((realm) => {
-        const userName = realm.objects(UserModel.User)[0].name;
-        dispatch(setUser(userName));
-        dispatch(needSignup(false));
-      }).catch((error) => {
+    Realm.open({
+      schema: UserSchema,
+    }).then((realm) => {
+      const userName = realm.objects('User');
+      if (userName.length === 0) {
         dispatch(needSignup(true));
-      })
-    );
+      } else {
+        const me = userName.slice(0, 1);
+        dispatch(setUser(me));
+        dispatch(needSignup(false));
+      }
+    }).catch(() => {
+      dispatch(needSignup(true));
+    });
   };
 }
 
@@ -126,7 +133,7 @@ export function signup(userName) {
           throw errors(response.status);
         }
       })
-      .catch((error) => {
+      .catch(() => {
         dispatch(signupFail());
         dispatch(setErrorMessage('通信状況をご確認の上、再度お試しください。'));
       })
@@ -135,7 +142,16 @@ export function signup(userName) {
 }
 
 export function signupSuccess(userName) {
-  // Realmに保存
+  Realm.open({
+    schema: UserSchema,
+  }).then((realm) => {
+    realm.write(() => {
+      realm.create('User', {
+        name: userName,
+      });
+    });
+  });
+
   return {
     type: SIGNUP_SUCCESS,
     userName,
