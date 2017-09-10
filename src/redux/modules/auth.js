@@ -8,7 +8,7 @@ const LOAD_SUCCESS = 'teamhub/auth/LOAD_SUCCESS';
 const LOAD_FAIL = 'teamhub/auth/LOAD_FAIL';
 const SIGNUP_SUCCESS = 'teamhub/auth/SIGN_UP_SUCCESS';
 const SET_USER = 'teamhub/auth/SET_USER';
-const SIGNUP_FAIL = 'teamhub/auth/SIGN_UP_FAIL';
+const SIGNUP_FAIL = 'teamhub/auth/SIGNUP_FAIL';
 const SET_ERROR_MESSAGE = 'teamhub/auth/SET_ERROR_MESSAGE';
 const NEED_SIGNUP = 'teamhub/auth/NEED_SIGNUP';
 
@@ -68,34 +68,8 @@ export default function reducer(state = initialState, action = {}) {
   }
 }
 
-/*
-function requestUser() {
-  return {
-    type: LOAD,
-  };
-}
-
-function receiveUser(json) {
-  return {
-    type: LOAD_SUCCESS,
-    data: json,
-  };
-}
-
-function receiveUserFail(error) {
-  return {
-    type: LOAD_FAIL,
-    error,
-  };
-}
-*/
-
 export function hasUserData() {
-  return (dispatch, getState) => {
-    const realm = new Realm({
-      schema: [UserModel.User],
-    });
-
+  return (dispatch) => {
     return (
       Realm.open({
         schema: [UserModel.User],
@@ -125,7 +99,7 @@ export function setUser(userName) {
 }
 
 export function signup(userName) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     const path = `${pathConfig.userSignup}`;
     const userData = {
       user: {
@@ -153,6 +127,7 @@ export function signup(userName) {
         }
       })
       .catch((error) => {
+        dispatch(signupFail());
         dispatch(setErrorMessage('通信状況をご確認の上、再度お試しください。'));
       })
       .done();

@@ -31,7 +31,6 @@ export default class CommonModal extends Component {
   }
 }
 
-
 const styles = StyleSheet.create({
   alertModal: {
     justifyContent: 'center',
