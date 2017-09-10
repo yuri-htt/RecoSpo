@@ -35,9 +35,9 @@ export class App extends Component {
       <View style={styles.scene}>
         <SignupModal {...this.props} />
         {auth.alertModalVisible &&
-          <CommonModal 
+          <CommonModal
             onClosed={'auth.alertModalVisible'}
-            {...this.props} 
+            {...this.props}
           />
         }
         <Tabs />

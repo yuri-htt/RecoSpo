@@ -68,6 +68,7 @@ export default function reducer(state = initialState, action = {}) {
   }
 }
 
+/*
 function requestUser() {
   return {
     type: LOAD,
@@ -87,6 +88,7 @@ function receiveUserFail(error) {
     error,
   };
 }
+*/
 
 export function hasUserData() {
   return (dispatch, getState) => {
