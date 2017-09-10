@@ -21,7 +21,7 @@ export default class Screens {
   addEvent() {
     return {
       name: 'addEvent',
-      component:  AddEvent,
+      component: AddEvent,
     };
   }
 

@@ -37,3 +37,4 @@ android/keystores/debug.keystore
 .DS_Store
 build/
 lib/pathConfig.js
+realm-object-server/*

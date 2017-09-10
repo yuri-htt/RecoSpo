@@ -1,5 +1,11 @@
 {
   "extends": "airbnb",
+  "env": {
+    "browser": true,
+    "jquery": true,
+    "node": true,
+    "es6": true
+  },
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module",
@@ -14,6 +20,7 @@
   ],
   "rules": {
     "react/jsx-filename-extension": ["off"],
+    "react/jsx-no-undef": ["off"],
     "react/prop-types": ["off"],
     "react/forbid-prop-types": ["off"],
     "react/require-default-props": ["off"],
@@ -25,7 +32,8 @@
     "no-shadow": ["off"],
     "no-nested-ternary": ["off"],
     "no-plusplus": ["off"],
-    "no-multi-assign": ["off"]
+    "no-multi-assign": ["off"],
+    "no-undef": ["off"],
   },
   "settings": {
     "react": {
