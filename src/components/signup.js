@@ -26,7 +26,7 @@ export default class SignupModal extends Component {
     alertModalVisible: false,
     errorMessage: '',
   }
-  
+
   render() {
     const {
       auth,
