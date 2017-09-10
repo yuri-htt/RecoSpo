@@ -8,8 +8,11 @@ import Modal from 'react-native-modalbox';
 import config from '../../../lib/config';
 
 export default class CommonModal extends Component {
-  state = {
-    alertModalVisible: false,
+  constructor(props) {
+    super(props);
+    state = {
+      alertModalVisible: false,
+    };
   }
 
   render() {
@@ -23,7 +26,7 @@ export default class CommonModal extends Component {
       <Modal
         style={styles.alertModal}
         isOpen={true}
-        onClosed={() => actions.change(`${onClosed}`, false )}
+        onClosed={() => actions.change(`${onClosed}`, false)}
       >
         <Text style={styles.alertModalTxt}>{auth.modalContent}</Text>
       </Modal>

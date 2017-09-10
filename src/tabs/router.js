@@ -37,3 +37,5 @@ export const Tabs = TabNavigator({
     },
   },
 });
+
+export { Tabs as default };

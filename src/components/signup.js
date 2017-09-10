@@ -20,11 +20,14 @@ const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
 export default class SignupModal extends Component {
-  state = {
-    modalVisible: false,
-    userName: 'Your name',
-    alertModalVisible: false,
-    errorMessage: '',
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalVisible: false,
+      userName: 'Your name',
+      alertModalVisible: false,
+      errorMessage: '',
+    };
   }
 
   render() {
@@ -51,7 +54,7 @@ export default class SignupModal extends Component {
                   style={styles.textInput}
                   onChangeText={userName => this.setState({ userName })}
                   value={this.state.userName}
-                  onFocus={() => this.setState({ userName : '' })}
+                  onFocus={() => this.setState({ userName: '' })}
                 />
                 <Divider style={styles.border} />
               </View>
