@@ -1,1 +1,2 @@
-This app powerd by React Native. Using Realm and Redux.
+##RecoSpo
+This app powerd by React Native.   Using Realm and Redux.
