@@ -42,6 +42,7 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         userName: action.userName,
+        signupModalVisible: false,
       };
     case SIGNUP_FAIL:
       return {
@@ -113,7 +114,6 @@ export function signup(userName) {
         nickname: userName,
       },
     };
-
     return fetch(`${path}`,
       {
         method: 'POST',
