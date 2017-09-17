@@ -5,4 +5,4 @@ const User = {
   },
 };
 
-export default UserSchema = [User];
+export const UserSchema = [User];
